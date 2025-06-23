@@ -1,4 +1,4 @@
-def make_dic(document):
+def make_dic(document, words_num):
     words = [
         {
             "word": "significant",
@@ -25,4 +25,4 @@ def make_dic(document):
 
     return words
 
-print(make_dic("I hava pen")[1]["word"])
+print(make_dic("I hava pen", 3)[1]["word"])

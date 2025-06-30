@@ -5,3 +5,9 @@
 pip install spacy scikit-learn pandas wordfreq PyDictionary
 python -m spacy download en_core_web_sm
 ```
+
+アプリ起動
+```
+pip install flask
+python app.py
+```

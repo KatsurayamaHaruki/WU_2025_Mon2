@@ -1,3 +1,5 @@
+# dammy.py
+
 def make_dic(document, words_num):
     words = [
         {
@@ -23,6 +25,6 @@ def make_dic(document, words_num):
         },
     ]
 
-    return words
-
-print(make_dic("I hava pen", 3)[1]["word"])
+    # TF-IDF値順にソートして上位 words_num 個だけ返す
+    sorted_words = sorted(words, key=lambda x: x["tfidf"], reverse=True)
+    return sorted_words[:words_num]

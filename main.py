@@ -23,8 +23,8 @@ POS_MAP_EN_TO_JA = {
 
 try:
     # (CSVファイルの読み込み部分は変更なし)
-    df_a1_b2 = pd.read_csv(r"C:\\Users\\uedaaya\\Downloads\\cefrj-vocabulary-profile-1.51.csv", encoding="shift-jis")
-    df_c1_c2 = pd.read_csv(r"C:\\Users\\uedaaya\\Downloads\\octanove-vocabulary-profile-c1c2-1.0.csv", encoding="shift-jis")
+    df_a1_b2 = pd.read_csv("cefrj-vocabulary-profile-1.51.csv", encoding="shift-jis")
+    df_c1_c2 = pd.read_csv("octanove-vocabulary-profile-c1c2-1.0.csv", encoding="shift-jis")
     COMBINED_CEFR_DF = pd.concat([df_a1_b2, df_c1_c2], ignore_index=True)
     # ★★★ 改善: 検索を安定させるため、インデックスをすべて小文字に変換 ★★★
     COMBINED_CEFR_DF['headword'] = COMBINED_CEFR_DF['headword'].str.lower()
@@ -84,11 +84,13 @@ def preprocess_and_calculate_tfidf(text: str) -> pd.DataFrame:
     return pd.DataFrame(word_data_list)
 
 
-def make_dic(tfidf_df: pd.DataFrame, num_words: int) -> list:
+def make_dic(example_text: str, num_words: int) -> list:
     """
     事前計算されたTF-IDFデータフレームから上位N個の単語を選択し、
     和訳とCEFRレベルを付与してJSON形式のリストを作成します。
     """
+
+    tfidf_df = preprocess_and_calculate_tfidf(example_text)
     if tfidf_df.empty:
         return []
 
@@ -127,9 +129,8 @@ if __name__ == "__main__":
     """
     print("\n--- 最初の文章で実行 ---")
     print("TF-IDF値を計算中...")
-    tfidf_dataframe = preprocess_and_calculate_tfidf(example_text)
     print("計算結果から上位10単語の辞書を生成中...")
-    vocabulary_json_10 = make_dic(tfidf_dataframe, num_words=10)
+    vocabulary_json_10 = make_dic(example_text, num_words=10)
     if vocabulary_json_10:
         print(json.dumps(vocabulary_json_10, indent=4, ensure_ascii=False))
     else:

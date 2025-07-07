@@ -83,6 +83,7 @@ def make_dic(tfidf_df: pd.DataFrame, num_words: int) -> list:
     TF-IDFデータフレームからCEFRレベルがA1, A2の単語を除外し、
     上位N個の単語で和訳などを付与した辞書リストを作成します。
     """
+    tfidf_df = preprocess_and_calculate_tfidf(tfidf_df)
     if tfidf_df.empty:
         return []
 
